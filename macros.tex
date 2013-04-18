@@ -1,0 +1,238 @@
+\usepackage{amsmath}
+\usepackage{times-lite,color}
+\usepackage{paralist}
+\usepackage{proof}
+\usepackage{semantic}
+\usepackage{graphicx}
+\usepackage{xspace}
+\usepackage{caption}
+\DeclareCaptionType{copyrightbox} % hack to make caption happy with sigplanconf
+\usepackage{subcaption}
+%\usepackage[caption=false]{subfig}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{pifont}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage[T1]{fontenc}
+\usepackage{minibox}
+%\newcommand*{\subfigureautorefname}{\figureautorefname}
+\usepackage{sfmath}
+\IfFileExists{.usepdfcomments}
+{\usepackage[icon=Comment,color=notecolor,hoffset=-5pt,voffset=8pt]{pdfcomment}
+\def\usepdfcomment{}}
+
+\usepackage[sfcode,small]{ttquot}
+
+\def\thepage{\arabic{page}} % delete for final camera-ready
+
+%\usepackage{inconsolata}
+
+\renewcommand*\ttdefault{txtt}
+
+
+%%%%%% Typeset code %%%%%%
+\definecolor{javapurple}{rgb}{0.5,0,0.35}
+\definecolor{javagreen}{rgb}{0,0.6,0}
+
+\lstset{columns=fullflexible}
+\lstset{language=java, basicstyle=\fontfamily{lmss}\selectfont\small, 
+        keywordstyle=\color{javapurple}\fontfamily{lmss}\selectfont\bfseries,
+        commentstyle=\tt\slshape,
+        }
+
+%\lstset{language=java, basicstyle=\ttfamily, 
+%        keywordstyle=\color{javapurple}\tt\bfseries},
+%         commentstyle=\tt\slshape}
+
+%\lstset{deletekeywords={int,float,double,char,if,else,return,class,void,this,
+%                        new,for,public}}
+
+\lstset{numbers=left, firstnumber=1, numberstyle=\tiny\color{gray}}
+\lstset{alsoletter={:}, morekeywords={:APP:,:DB:}, escapeinside={@}{@}}
+\lstset{showstringspaces=false}
+
+
+%%%%%% AST %%%%%%
+%\newcommand{\bnf}{\ensuremath{\ | \ }}
+\renewcommand{\sp}{\ | \ }
+\newcommand{\logicAnd}{\wedge}
+\newcommand{\logicOr}{\vee} 
+\newcommand{\code}[1]{\lstinline[language=java]{#1}}
+
+%%%%%% Comments %%%%%%
+\newcommand{\textred}[1]{\textcolor{red}{#1}}
+\ifx\noeditingmarks\undefined%
+\ifx\usepdfcomment\undefined%
+\newcommand{\pgwrapper}[4]{%
+\def\argone{#1}%
+\def\none{None}%
+\ifx\argone\none%
+\textred{#2: #3}%
+\else%
+\textred{#1 [#2: #3]}%
+\fi}%
+\else%
+\definecolor{notecolor}{rgb}{1.0,1.0,0.7}%
+\definecolor{srmcolor}{rgb}{1.0,1.0,0.7}%
+\definecolor{aslcolor}{rgb}{1.0,0.8,0.7}%
+\definecolor{accolor}{rgb}{0.7,1.0,1.0}%
+\newcommand\pgwrapper[4]{%
+\def\argone{#1}%
+\def\none{None}%
+\ifx\argone\none%
+\pdfcomment[author=#2,color=#4]{#3}%
+\else%
+\pdfmarkupcomment[author=#2,color=#4]{#1}{}%
+\pdfmargincomment[author=#2]{#3}\fi}%
+\fi
+\else
+\newcommand{\pgwrapper}[4]{#1}
+\fi
+
+\newcommand{\wu}[2][None]{\pgwrapper{#1}{WU}{#2}{srmcolor}}
+\newcommand{\lr}[2][None]{\pgwrapper{#1}{LR}{#2}{aslcolor}}
+\newcommand{\ac}[2][None]{\pgwrapper{#1}{AC}{#2}{accolor}}
+
+\IfFileExists{.nocomments}
+    {\usepackage[disabled]{aplcomments}}
+    {\IfFileExists{.inlinecomments}
+        {\usepackage[inline]{aplcomments}}
+        {\usepackage{aplcomments}}}
+
+
+\newcommenter{wu}{1.0,1.0,0.3}
+\newcommenter{ac}{0.4,1.0,1.0}
+\newcommenter{lr}{0.4,0.4,1.0}
+
+
+%%%%%%% Labels %%%%%%
+\newcommand{\figlabel}[1]{\label{f:#1}}
+\newcommand{\seclabel}[1]{\label{s:#1}}
+\newcommand{\secref}[1]{Sec.~\ref{s:#1}}  % for use in text
+\newcommand{\Secref}[1]{Sec.~\ref{s:#1}}  % for start of sentence
+\newcommand{\figref}[1]{Fig.~\ref{f:#1}}     % for use in text
+\newcommand{\Figref}[1]{Figure~\ref{f:#1}}   % for start of sentence
+\newcommand{\Figrefs}[2]{Figures~\ref{f:#1} and~\ref{fig:#2}}
+\newcommand{\figrefsMany}[1]{Figs.~\ref{f:#1}}
+\newcommand{\lstref}[1]{line~\ref{lst:#1}}
+\newcommand{\thmlabel}[1]{\label{t:#1}}
+\newcommand{\thmref}[1]{Thm.~\ref{t:#1}}
+\newcommand{\applabel}[1]{\label{ap:#1}}
+\newcommand{\appref}[1]{Appendix~\ref{ap:#1}}
+
+
+%%%%%% Bibliography %%%%%%
+\usepackage{hyperref}
+  \let\oldthebibliography=\thebibliography
+  \let\endoldthebibliography=\endthebibliography
+  \renewenvironment{thebibliography}[1]{%
+    \begin{oldthebibliography}{#1}%
+      \setlength{\parskip}{0ex}%
+      \setlength{\itemsep}{0ex}%
+  }%
+  {%
+    \end{oldthebibliography}%
+  }
+
+
+%%%%%% Misc %%%%%%
+\newcommand{\C}[1]{\lstinline!#1!}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+
+%\renewcommand{\b}[1]{\lstinline{#1}}
+\renewcommand{\b}[1]{\ensuremath{{\sf{#1}}}}
+%\renewcommand{\t}[1]{\text{#1}}
+%\renewcommand{\b}[1]{\t{\lstinline{#1}}}
+
+% relational algebra
+\newcommand{\select}[2]{\ensuremath{\sigma_{#1}(#2)}}
+\newcommand{\selectSym}{\b{\sigma}}
+
+\newcommand{\project}[2]{\ensuremath{\pi_{#1}(#2)}}
+\newcommand{\projectSym}{\b{\pi}}
+
+\newcommand{\join}[2]{\ensuremath{\bowtie_{#1}\hspace{-0.02in}(#2)}}
+\newcommand{\joinP}[2]{\ensuremath{\bowtie'_{#1}\hspace{-0.02in}(#2)}}
+\newcommand{\joinSym}{\b{\bowtie}}
+
+\newcommand{\append}{\b{append}}
+\newcommand{\sort}[2]{\ensuremath{\b{sort}_{#1}(#2)}}
+\newcommand{\sortSym}{\b{sort}}
+
+\newcommand{\unique}{\b{unique}}
+
+\renewcommand{\top}[2]{\ensuremath{\b{top}_{#1}(#2)}}
+\newcommand{\topSym}{\b{top}}
+
+\renewcommand{\min}{\b{min}}
+\renewcommand{\max}{\b{max}}
+\renewcommand{\sum}{\b{sum}}
+\newcommand{\agg}{\b{agg}}
+\newcommand{\size}{\b{size}}
+%\newcommand{\True}{\b{{\bf True}}}
+\newcommand{\True}{\b{True}}
+\newcommand{\False}{\b{False}}
+\newcommand{\Query}{\b{Query}}
+
+\newcommand{\get}[2]{\ensuremath{\b{get}_{#1}(#2)}}
+\newcommand{\getSym}{\b{get}}
+\newcommand{\getHelper}{\b{getHelper}}
+
+\newcommand{\contains}{\b{contains}}
+
+\newcommand{\concat}{\b{cat}}
+
+\newcommand{\tail}{\b{tail}}
+\newcommand{\head}{\b{head}}
+
+\newcommand{\AND}{\wedge}
+\newcommand{\OR}{\vee}
+\newcommand{\NOT}{\neg}
+
+% input language
+\newcommand{\ite}[3]{\b{if}(#1)~\b{then}~#2~\b{else}~#3}
+\newcommand{\while}[2]{\b{while}(#1)~\b{do}~#2}
+\newcommand{\SKIP}{\b{skip}}
+\newcommand{\assert}[1]{\b{assert}~#1}
+
+% SQL commands
+\newcommand{\SELECT}{~\b{SELECT}~}
+\newcommand{\SELECTDISTINCT}{~\b{SELECT~DISTINCT}~}
+\newcommand{\FROM}{~\b{FROM}~}
+\newcommand{\WHERE}{~\b{WHERE}~}
+\newcommand{\UNION}{~\b{UNION~ALL}~}
+\newcommand{\IN}{~\b{IN}~}
+\newcommand{\ORDER}{~\b{ORDER~BY}~}
+\newcommand{\AS}{~\b{AS}~}
+\newcommand{\getOrder}{\b{Order}}
+
+\newcommand{\qbs}{{\scshape Qbs}\xspace}
+\newcommand{\sembrack}[1]{[\![#1]\!}
+\newcommand{\transFn}{\b{Trans}}
+\newcommand{\id}{\b{id}}
+
+
+\newcommand{\VC}{\b{VC}}
+
+
+
+%\usepackage{float}
+%\floatstyle{boxed}
+%\restylefloat{figure}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{definition}{Definition}
+% theorems and definitions w/o numbering
+\newtheorem*{theorem*}{Theorem}
+\newtheorem*{definition*}{Definition}
+
+\newcommand{\etal}{\textit{et al.}\@\xspace}
+\newcommand{\eg}{\textit{e.g.}\@\xspace}
+\newcommand{\ie}{\textit{i.e.}\@\xspace}
+\newcommand{\Sk}{\textsc{Sketch}}
+\newcommand{\cegis}{\textsc{cegis}}
+
+\newcommand{\cmark}{\ding{51}}
+
+\newcommand{\arrow}{\rightarrow}
